@@ -1,0 +1,14 @@
+{
+	"version": 3,
+	"file": "custom.css",
+	"sources": [
+		"custom.scss",
+		"_sass/custom.scss"
+	],
+	"sourcesContent": [
+		"@import \"custom\";\n",
+		".ml-2 {\n  margin-left: 0.5rem;\n}\n.mb-2 {\n  margin-bottom: 0.5rem;\n}\n.m-2{\n  margin:0.25rem;\n}\n.cate-tree .el-tree-node__label {\n  font-size: var(--el-font-size-medium)\n}\n// 解決 Input 框中文字選中時沒有背景色的問題。\n// 在mac下測試，得講這個注釋掉。並刪掉 element-plus中的類似設置\n//.el-input__inner::-moz-selection{outline:initial}\n//.el-input__inner::selection{outline:initial}\n"
+	],
+	"names": [],
+	"mappings": "ACAA,AAAA,KAAK,AAAC,CACJ,WAAW,CAAE,MAAM,CACpB,AACD,AAAA,KAAK,AAAC,CACJ,aAAa,CAAE,MAAM,CACtB,AACD,AAAA,IAAI,AAAA,CACF,MAAM,CAAC,OAAO,CACf,AACD,AAAA,UAAU,CAAC,oBAAoB,AAAC,CAC9B,SAAS,CAAE,0BAA0B,CACtC"
+}

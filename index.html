@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>內典百科 | 以現代技術延續传统經錄。匯集內典相關的實用信息，為研讀與整理創造便利。</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="內典百科" />
+<meta name="author" content="大衆閱藏" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="以現代技術延續传统經錄。匯集內典相關的實用信息，為研讀與整理創造便利。" />
+<meta property="og:description" content="以現代技術延續传统經錄。匯集內典相關的實用信息，為研讀與整理創造便利。" />
+<link rel="canonical" href="/" />
+<meta property="og:url" content="/" />
+<meta property="og:site_name" content="內典百科" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="內典百科" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"大衆閱藏"},"description":"以現代技術延續传统經錄。匯集內典相關的實用信息，為研讀與整理創造便利。","headline":"內典百科","name":"內典百科","url":"/"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Latest compiled and minified JavaScript -->
+  <script src='/assets/jquery_3.6.3.min.js'></script>
+  <script src='/assets/bootstrap_3.4.1.min.js'></script>
+  <link rel="stylesheet" href='/assets/main.css'><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="內典百科" /><link rel="stylesheet" href='/assets/element-plus_2.2.20.css'>
+  <script src='/assets/vue_3.2.43.global.min.js'></script>
+  <script src='/assets/element-plus-icons-vue_2.0.10.js'></script>
+  <script src='/assets/element-plus_2.2.20.js'></script>
+  <script src='/assets/clipboard_2.0.10.min.js'></script>
+  <script src='/assets/vue-clipboard2_0.3.3.min.js'></script>
+  <script src='/assets/vue-jsonp_2.0.0.min.js'></script><link rel="stylesheet" href='/assets/custom.css'></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href='/index.html'>內典百科 <span style="font-size: 0.6em;color:gray">藏內文獻信息庫</span></a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+          <a class="page-link" href='/lib/index.html'>文库</a>
+          <a class="page-link" href='/lib/changelog.html'>更新日志</a>
+          <a class="page-link" href='/about.html'>使用说明</a>
+        </div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <script src="assets/opencc-js_1.0.4/data.noPhrases.js"></script>          <!-- Required -->
+<script src="assets/opencc-js_1.0.4/data.t2cn.js"></script>     <!-- For Traditional Chinese to Simplified Chinese -->
+<script src="assets/opencc-js_1.0.4/bundle-browser.js"></script><!-- Required -->
+<div id="app">
+    <div style="margin:50px auto; text-align: center;">
+        <div style="font-size: 3em">内典百科</div>
+    </div>
+    <div style="margin:20px auto; text-align: center;">
+        <div style="font-size: 1.5em">典籍搜索</div>
+        <div style="color:gray">題解·註疏·異譯本·部類·版本</div>
+    </div>
+    <el-form @submit.prevent>
+        <el-form-item>
+            <el-input v-model="searchBox.keyword" @change="doSearch" clearable :placeholder="searchBox.Placeholder">
+                <template #append>
+                    <el-button type="primary" icon="Search"></el-button>
+                </template>
+            </el-input>
+        </el-form-item>
+    </el-form>
+    <div id="search-results">
+        <el-card class="box-card mb-2" v-for="item in searchResults" :key="item.code">
+            
+            <div class="text item">
+                <a :href="'work/'+item.code+'.html'" target="_blank"> 《<b>{{item.title}}</b>》（{{item.juan}}）{{item.author}}</a>
+                <el-tag class="ml-2" v-if="item.code">{{item.code}}</el-tag>
+                <el-tag class="ml-2" v-if="item.codes.CBETA">{{item.codes.CBETA}}</el-tag>
+                <el-tag class="ml-2" v-if="item.codes.CBETAdup">{{item.codes.CBETAdup}}</el-tag>
+            </div>
+            
+        </el-card>
+    </div>
+    <div id="action-results" v-show="actionResults.show">
+        <el-result
+                :icon="actionResults.type"
+                :title="actionResults.title"
+                :sub-title="actionResults.desc"
+        ></el-result>
+    </div>
+    <div class="cards">
+        <el-card shadow="always" class="mb-2">
+           <template #header>
+                <div class="card-header">
+                    <span>基本部類</span>
+                </div>
+            </template>
+            <div>
+                
+                <el-tag round class="m-2" v-for="item in cateList">
+                    <el-link :href="'categories/HM.html#'+item.path" target="_blank">{{item.name}}</el-link>
+                </el-tag>
+                
+                <el-divider>其他分類方式</el-divider>
+                <el-link href="categories/ZJ.html">《閱藏知津》</el-link>
+                ，
+                <el-link href="categories/LC.html">《新編漢文大藏經目錄》</el-link>
+                ，
+                <el-link href="categories/HY.html">《大藏會閱》</el-link>
+                ，
+                <el-link href="categories/TY.html">《大藏經總目提要》</el-link>
+                ，
+                <el-link href="categories/CBETA.html">CBETA</el-link>
+            </div>
+        </el-card>
+    </div>
+    <div style="margin:20px auto; margin-top: 70px; text-align: center;">
+        <div style="font-size: 1.5em">佛經人名搜索</div>
+        <div style="color:gray">別名·前生後世·親屬·原文出處</div>
+    </div>
+    <el-form @submit.prevent>
+        <el-form-item>
+            <el-input v-model="personSearchBox.keyword" @change="personDoSearch" clearable :placeholder="personSearchBox.Placeholder">
+                <template #append>
+                    <el-button type="primary" icon="Search"></el-button>
+                </template>
+            </el-input>
+        </el-form-item>
+    </el-form>
+    <div id="person-search-results">
+        <el-card class="box-card mb-2" v-for="item in personSearchResults" :key="item.id">
+            
+            <div class="text item">
+                <a :href="'person/'+item.id+'.html'" target="_blank"><b>{{item.name_std}}</b><small>（{{item.names}}）</small></a>
+                <el-tag class="ml-2" v-if="item.id">{{item.id}}</el-tag>
+            </div>
+            
+        </el-card>
+    </div>
+    <div id="action-results" v-show="personActionResults.show">
+        <el-result
+                :icon="personActionResults.type"
+                :title="personActionResults.title"
+                :sub-title="personActionResults.desc"
+        ></el-result>
+    </div>
+    <div class="cards">
+        <el-card shadow="always" class="mb-2">
+           <template #header>
+                <div class="card-header">
+                    <span>人名索引</span>
+                </div>
+            </template>
+            <div>
+                <el-tag round class='m-2'>
+                    <el-link href="/person/work-index.html">按經</el-link>
+                </el-tag>
+                <el-tag round class='m-2'>
+                    <el-link href="/person/identity-index.html">按身份</el-link>
+                </el-tag>
+                <el-tag round class='m-2'>
+                    <el-link href="/person/pinyin-index.html">按拼音</el-link>
+                </el-tag>
+            </div>
+        </el-card>
+        <el-divider>···</el-divider>
+        <el-card shadow="always" class="mb-2">
+            <template #header>
+                <div class="card-header">
+                    <span>文庫</span> <el-link href="/lib/index.html" style="float: right; padding: 3px 0">更多➣</el-link>
+                </div>
+            </template>
+            <div>
+                <el-tag>統計:</el-tag>
+                <a href="/lib/statistics/译经数量.html">《历代译师译经数量》</a>,
+                <a href="/lib/statistics/注疏数量.html">《注疏数量》</a>,
+                <a href="/lib/statistics/汉文佛教大藏经谱系图.html">《汉文佛教大藏经谱系图》</a>
+                <el-tag>平行文本:</el-tag>
+                <a href="/lib/parallel-text/般若經品目對勘（九部）.html">《般若經品目對勘（九部）》</a>,
+                <a href="/lib/parallel-text/parallel-prajna-sutra.html">《大般若經對讀》</a>,
+                <a href="/lib/personal-names/index.html">《佛經人名整理（一期）》</a>
+                <el-tag>其他:</el-tag>
+                <a href="/lib/changelog.html">《更新日志》</a>
+
+            </div>
+        </el-card>
+    </div>
+</div>
+<script>
+    const App = {
+        data() {
+            return {
+                searchBox: {
+                    Placeholder: "輸入“經題”、“經號”或“作者”進行搜索",
+                    keyword: ""
+                },
+                data: [
+                    {
+                        codes: {
+                            CBETA: "T0001",
+                            HM: "HM0001"
+                        },
+                        title: "长阿含经",
+                        juan: "二十二卷",
+                        author: "佛陀耶舍"
+                    },
+                    {
+                        codes: {
+                            CBETA: "T0001",
+                            HM: "HM0001"
+                        },
+                        title: "长阿含经",
+                        juan: "二十二卷",
+                        author: "佛陀耶舍"
+                    },
+                ],
+                searchResults: [],
+                actionResults: {
+                    show: false,
+                    type: "info",
+                    title: "",
+                    desc: ""
+                },
+                cateList: [
+                    {name: "阿含部", path: "HM.1"},
+                    {name: "本緣部", path: "HM.2"},
+                    {name: "般若部", path: "HM.3"},
+                    {name: "法華部", path: "HM.4"},
+                    {name: "華嚴部", path: "HM.5"},
+                    {name: "寶積部", path: "HM.6"},
+                    {name: "涅槃部", path: "HM.7"},
+                    {name: "大集部", path: "HM.8"},
+                    {name: "經集部", path: "HM.9"},
+                    {name: "密教部", path: "HM.10"},
+                    {name: "律部", path: "HM.11"},
+                    {name: "釋經論部", path: "HM.12"},
+                    {name: "毘曇部", path: "HM.13"},
+                    {name: "中觀部", path: "HM.14"},
+                    {name: "瑜伽部", path: "HM.15"},
+                    {name: "論集部", path: "HM.16"},
+                    {name: "經疏部", path: "HM.17"},
+                    {name: "律疏部", path: "HM.18"},
+                    {name: "論疏部", path: "HM.19"},
+                    {name: "諸宗部", path: "HM.20"},
+                    {name: "史傳部", path: "HM.21"},
+                    {name: "地志部", path: "HM.22"},
+                    {name: "護法部", path: "HM.23"},
+                    {name: "禮懺部", path: "HM.24"},
+                    {name: "事彙部", path: "HM.25"},
+                    {name: "別集部", path: "HM.26"},
+                    {name: "音義部", path: "HM.27"},
+                    {name: "目錄部", path: "HM.28"},
+                    {name: "南傳部", path: "HM.29"},
+                    {name: "藏傳部", path: "HM.30"},
+                    {name: "續經疏部", path: "HM.31"},
+                    {name: "續律疏部", path: "HM.32"},
+                    {name: "續論疏部", path: "HM.33"},
+                    {name: "續諸宗部", path: "HM.34"},
+                    {name: "悉曇部", path: "HM.35"},
+                    {name: "古逸部", path: "HM.36"},
+                    {name: "疑似部", path: "HM.37"},
+                    {name: "外教部", path: "HM.38"},
+                    {name: "存目", path: "HM.39"},
+                    {name: "誤分誤録", path: "HM.40"}
+                ],
+                personSearchBox: {
+                    Placeholder: "輸入“人名”進行搜索，如：“舍利弗”",
+                    keyword: ""
+                },
+                personData:[
+                    {id:1,name_std:"釋迦牟尼佛",names:"佛,世尊"},
+                    {id:2,name_std:"毗婆尸佛",names:"毗婆尸"},
+                ],
+                personSearchResults: [],
+                personActionResults: {
+                    show: false,
+                    type: "info",
+                    title: "",
+                    desc: ""
+                }
+            };
+        },
+        methods: {
+            personDoSearch(keyWord){
+                this.personSearchResults = [];
+                this.personHideActionResults();
+                this.searchResults = [];
+                this.hideActionResults();
+                keyWord = keyWord.trim();
+                if(keyWord.length < 1){
+                    return 1;
+                }
+                // 关键词转为简体，繁简体同时搜索。
+                sKeyWord=this.t2cConverter(keyWord);
+                for (const dataKey in this.personData){
+                    item = this.personData[dataKey];
+                    if (!item.id){
+                        item.id=""
+                    }
+                    if (item.searchText.indexOf(keyWord) >= 0 || item.searchText.indexOf(sKeyWord) >= 0){
+                        this.personSearchResults.push(item)
+                    }
+                    if (this.personSearchResults.length >= 100){
+                        this.personShowInfo("僅顯示前100條","可以更換關鍵詞，獲得更精確的搜索結果");
+                        break;
+                    }
+                }
+                if (this.personSearchResults.length === 0) {
+                    this.personShowInfo("無內容", "目前僅收錄“阿含部”、“本緣部”佛經（大正藏T0001～T0219）中的人名。請更換關鍵詞進行搜索。");
+                }
+            },
+            personShowInfo(title, desc) {
+                this.personActionResults.type = "info";
+                this.personActionResults.title = title;
+                this.personActionResults.desc = desc;
+                this.personActionResults.show = true;
+            },
+            personHideActionResults(){
+                this.personActionResults.show = false;
+            },
+            doSearch(keyWord) {
+                this.personSearchResults = [];
+                this.personHideActionResults();
+                this.searchResults = [];
+                this.hideActionResults();
+                keyWord = keyWord.trim().toUpperCase();
+                if (keyWord.length < 1) {
+                    return 1;
+                }
+                if (keyWord.match(/^[0-9a-zA-Z]$/)) {
+                    this.showWarning("請檢查", "搜索經號需要至少 2 個字符");
+                    return 1;
+                }
+                for (const dataKey in this.data) {
+                    item = this.data[dataKey];
+                    if (!item.codes) {
+                        item.codes = []
+                    }
+                    // 搜索，searchText中本身包含繁體簡體，再把關鍵詞用簡體搜一次
+                    if (item.searchText.indexOf(keyWord) >= 0 || item.searchText.indexOf(this.t2cConverter(keyWord)) >= 0) {
+                        this.searchResults.push(item)
+                    }
+                    if (this.searchResults.length >= 100) {
+                        this.showInfo("僅顯示前100條", "可以更換關鍵詞，獲得更精確的搜索結果");
+                        break;
+                    }
+                }
+                if (this.searchResults.length === 0) {
+                    this.showInfo("無內容", "請更換關鍵詞進行搜索");
+                }
+            },
+            showWarning(title, desc) {
+                this.actionResults.type = "warning";
+                this.actionResults.title = title;
+                this.actionResults.desc = desc;
+                this.actionResults.show = true;
+            },
+            showInfo(title, desc) {
+                this.actionResults.type = "info";
+                this.actionResults.title = title;
+                this.actionResults.desc = desc;
+                this.actionResults.show = true;
+            },
+            hideActionResults() {
+                this.actionResults.show = false;
+            },
+        },
+        created: function () {
+            //import {jsonp} from 'vue-jsonp'
+            this.t2cConverter = OpenCC.Converter({from: 'allVar2StdByChar', to: 'std2SimpleByChar'});
+            VueJsonp.jsonp('assets/data/data-file-for-search.js', {callbackName: 'dataForSearchCB'}).then(
+                (res) => {
+                    this.data = res;
+                    for (let i = 0; i < this.data.length; i++) {
+                        item = this.data[i];
+                        if (!item.codes) {
+                            item.codes = []
+                        }
+                        this.data[i].searchText = (item.code || "") + "," + (item.codes.HM || "") + "," + (item.codes.CBETA || "") + "," + (item.codes.CBETAdup || "") + "," + (item.title || "") + "," + (item.author || "");
+                        this.data[i].searchText = this.data[i].searchText.toUpperCase();
+                        this.data[i].searchText += this.t2cConverter(this.data[i].searchText)
+                    }
+                    console.log(this.data.length)
+                }
+            );
+            VueJsonp.jsonp('assets/data/person-data-file-for-search.js', {callbackName: 'personDataForSearchCB'}).then(
+                (res) => {
+                    this.personData = res;
+                    for (let i = 0; i < this.personData.length; i++) {
+                        item = this.personData[i];
+                        this.personData[i].searchText = (item.name_std || "") + "," + (item.names || "");
+                        this.personData[i].searchText += ","+this.t2cConverter(this.personData[i].searchText);
+                    }
+                    console.log(this.personData.length);
+                }
+            );
+        }
+    };
+    const app = Vue.createApp(App);
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        //console.log(key)
+        app.component(key, component)
+    }
+    app.use(ElementPlus);
+    //app.use(VueJsonp);
+    VueClipboard.config.autoSetContainer = true;
+    app.use(VueClipboard);
+    app.mount("#app");
+</script>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">內典百科</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">大衆閱藏</li><li><a class="u-email" href="mailto:info@yuezang.org">info@yuezang.org</a></li><li><img alt="公安备案" src='/assets/%E5%A4%87%E6%A1%88%E5%9B%BE%E6%A0%87.png' width="14" height="14"/><small><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010502048211" target="_blank">京公网安备 11010502048211号</a></small></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a></li>
+  <li><small><a href="https://beian.miit.gov.cn/">京ICP备16014370号</a></small></li>
+</ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>以現代技術延續传统經錄。匯集內典相關的實用信息，為研讀與整理創造便利。</p>
+      </div>
+      
+      
+    </div>
+
+  </div>
+
+</footer>
+<div style="display: none">
+  <!--百度统计-->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b5928c93f4d8fe3b01073d346d7f54a6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</div>
+</body>
+
+</html>
